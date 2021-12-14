@@ -1,6 +1,10 @@
 // Declare UI vars
 let scoreDisplay = document.getElementById("score")
-const startButton = document.getElementById("startBtn")
+const startButton = document.getElementById("startBtn");
+const upBtn=document.querySelector('.up')
+const downBtn=document.querySelector('.down');
+const leftBtn=document.querySelector('.left');
+const rightBtn=document.querySelector('.right');
 const canvas = document.getElementById("game")
 const ctx = canvas.getContext("2d")
 
@@ -27,7 +31,33 @@ let appleX;
 let appleY;
 let xDirection;
 let yDirection;
-
+// controls for direction
+const direction={
+  moveRight(){
+    if (xDirection === -1)
+      return;
+    xDirection = 1;
+    yDirection = 0;
+  },
+  moveLeft(){
+    if (xDirection === 1)
+      return;
+    xDirection = -1
+    yDirection = 0;
+  },
+  moveUp(){
+    if (yDirection === 1)
+      return;
+    xDirection = 0;
+    yDirection = -1
+  },
+  moveDown(){
+    if (yDirection === -1)
+      return;
+    xDirection = 0
+    yDirection = 1;
+  }
+}
 function snake() {
 // Snake head position
   headX = 5
@@ -42,18 +72,23 @@ function snake() {
   // Snake initial direction
   xDirection = 0
   yDirection = 0
+  
+  // the snake should move right when the game start
+  direction.moveRight();
+  
 }
 
-snake()
+ snake()
 
 function drawGame() {
+  
   moveSnake()
   gameOver = false
   
   let result = isGameOver()
   if(result) {
 
-    snake()
+    snake();
     return
   }
 
@@ -70,26 +105,33 @@ function drawGame() {
   if(score > 7) {
     speed = 11
   }
+ 
 
-  setTimeout(drawGame, 1000 / speed)
+  setTimeout(drawGame, 1000 / speed);
 }
 
 function isGameOver() {
-  let gameOver = false
+   gameOver = false
 
   // Game hasnt started
   if (xDirection === 0 && yDirection === 0) {
-    return false
+    return 
   }
 
   // Hit walls
-  if(headX < 0) {
-    gameOver = true
-  } else if (headX === squareCount) {
-    gameOver = true
-  } else if (headY < 0) {
-    gameOver = true
-  } else if (headY === squareCount) {
+  // if(headX < 0 ) {
+  //   gameOver = true
+  // } else if (headX === squareCount) {
+  //   gameOver = true
+  // } else if (headY < 0) {
+  //   gameOver = true
+  // } else if (headY === squareCount) {
+  //   gameOver = true
+  // }
+  // Hit walls (refactored)
+  if(headX < 0 || headX === squareCount) {
+    gameOver = true;
+  } else if (headY < 0 || headY === squareCount) {
     gameOver = true
   }
 
@@ -112,7 +154,8 @@ function isGameOver() {
     gradient.addColorStop(0.7, "orangered")
 
     ctx.fillStyle = gradient
-    ctx.fillText("G A M E  O V E R", canvas.width / 15, canvas.height / 2)
+    ctx.fillText("G A M E  O V E R", canvas.width / 15, canvas.height / 2);
+    
   }
   return gameOver
 }
@@ -158,46 +201,52 @@ function generateApple() {
     appleY = Math.floor(Math.random() * squareCount)
     tailLength++
     score++
-    scoreDisplay.textContent = score
+    displayScore();
   }
 }
-
+function displayScore(){
+    scoreDisplay.textContent = score
+  
+}
 document.addEventListener("keyup", control)
 
 function control(e) {
   // up 
   if (e.keyCode === 38) {
-    if (yDirection === 1) 
-      return;
-    xDirection = 0
-    yDirection = -1
+    direction.moveUp();
   }
   
   // right
   if (e.keyCode === 39) {
-    if(xDirection === -1)
-      return;
-    xDirection = 1
-    yDirection = 0
+    direction.moveRight();
   } 
   
    // left
   if (e.keyCode === 37) {
-    if (xDirection === 1)
-      return;
-    xDirection = -1
-    yDirection = 0
+    direction.moveLeft()
   }
   
    // down
   if (e.keyCode === 40) {
-    if (yDirection === -1)
-      return;
-    xDirection = 0
-    yDirection = 1
+    direction.moveDown();
   }
 }
 
 drawGame()
-startButton.addEventListener("click", drawGame)
+startButton.addEventListener("click", drawGame);
+upBtn.addEventListener('click',()=>{
+  direction.moveUp()
+})
+
+downBtn.addEventListener('click',()=>{
+  direction.moveDown()
+})
+
+leftBtn.addEventListener('click',()=>{
+  direction.moveLeft()
+})
+
+rightBtn.addEventListener('click',()=>{
+  direction.moveRight()
+})
 
