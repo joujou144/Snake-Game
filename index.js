@@ -1,6 +1,6 @@
 // Declare UI vars
 let scoreDisplay = document.getElementById("score")
-const startButton = document.getElementById("startBtn")
+const restartBtn = document.getElementById("restartBtn")
 const canvas = document.getElementById("game")
 const ctx = canvas.getContext("2d")
 
@@ -28,7 +28,7 @@ let appleY;
 let xDirection;
 let yDirection;
 
-function snake() {
+function init() {
 // Snake head position
   headX = 5
   headY = 2
@@ -42,9 +42,12 @@ function snake() {
   // Snake initial direction
   xDirection = 0
   yDirection = 0
+
+  xDirection = 1
+  displayScore()
 }
 
-snake()
+init()
 
 function drawGame() {
   moveSnake()
@@ -53,7 +56,7 @@ function drawGame() {
   let result = isGameOver()
   if(result) {
 
-    snake()
+    init();
     return
   }
 
@@ -72,6 +75,7 @@ function drawGame() {
   }
 
   setTimeout(drawGame, 1000 / speed)
+
 }
 
 function isGameOver() {
@@ -115,6 +119,7 @@ function isGameOver() {
     ctx.fillText("G A M E  O V E R", canvas.width / 15, canvas.height / 2)
   }
   return gameOver
+
 }
 
 function clearScreen() {
@@ -158,7 +163,19 @@ function generateApple() {
     appleY = Math.floor(Math.random() * squareCount)
     tailLength++
     score++
-    scoreDisplay.textContent = score
+    displayScore()
+  }
+}
+
+function displayScore() {
+  scoreDisplay.textContent = score
+
+  if (score > 4) {
+    score += 1
+  }
+
+  if (score > 9) {
+    score += 1
   }
 }
 
@@ -199,5 +216,5 @@ function control(e) {
 }
 
 drawGame()
-startButton.addEventListener("click", drawGame)
+restartBtn.addEventListener("click", drawGame);
 
