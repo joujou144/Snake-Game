@@ -1,7 +1,7 @@
 # Snake-Game
 Classic Snake game from Nokia 3310
 
-Created with JavaScript
+Created with JavaScript canvas 
 
 ## Demo
 
