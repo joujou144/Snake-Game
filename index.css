@@ -1,22 +1,35 @@
 body, html {
   margin: 0;
-  padding: 0;
+  padding: 1em 0;
   font-family: monospace;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgb(27, 133, 92);
 }
 
-canvas {
-  box-shadow: black 10px 10px 30px;
+h1,
+h2,
+p {
+  color: white;
+}
+
+canvas,
+button {
+  /* box-shadow: black 10px 10px 30px; */
+  box-shadow: rgb(22, 21, 21) 5px 5px 8px;
 }
 
 button {
-  margin: 3em 0;
+  margin: 1.5em 0;
   padding: 5px 8px;
-  border: 2px solid rgb(109, 109, 109);
-  box-shadow: rgb(177, 177, 177) 5px 5px 8px;
+  border: 2px solid rgb(121, 120, 120);
   color: black;
   font-size: 14px;
   font-weight: 600;
@@ -24,8 +37,3 @@ button {
   font-family: monospace;
 }
 
-button:hover {
-  background-color: black;
-  color: white;
-  transition: 0.3s ease-in-out;
-}
