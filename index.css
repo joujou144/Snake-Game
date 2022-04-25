@@ -16,8 +16,9 @@ body, html {
 
 h1,
 h2,
-p {
+span {
   color: white;
+  padding: 0;
 }
 
 canvas,
